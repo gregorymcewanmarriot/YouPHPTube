@@ -15,7 +15,7 @@ $post = $_POST;
         $imgGif = $images->thumbsGif;
         $img = $images->thumbsJpg;
         $poster = $images->poster;
-        $cssClass = "";
+        $cssClass = "#greg";
         if (!empty($images->posterPortraitThumbs)) {
             $imgGif = $images->gifPortrait;
             $img = $images->posterPortraitThumbs;
@@ -79,11 +79,29 @@ foreach ($videos as $value) {
                 if (!empty($advancedCustom) && empty($advancedCustom->doNotDisplayLikes)) {
                     ?>
                     <span class="label label-success"><i class="fa fa-thumbs-up"></i> <?php echo $value['likes']; ?></span>
+					
+				
+					
+					
+					
                 <?php } ?>
                 <?php
                 if (!empty($advancedCustom) && empty($advancedCustom->doNotDisplayCategory)) {
                     ?>
-                    <span class="label label-success"><a style="color: inherit;" class="tile__cat" cat="<?php echo $value['clean_category']; ?>" href="<?php echo $global['webSiteRootURL'] . "cat/" . $video['clean_category']; ?>"><i class="<?php echo $video['iconClass']; ?>"></i> <?php echo $video['category']; ?></a></span>                       
+					
+
+					
+					
+                    <span class="label label-success">
+					<a style="color: inherit;" class="tile__cat" cat="<?php echo $value['clean_category']; ?>" href="<?php echo $global['webSiteRootURL'] . "cat/" . $value['clean_category']; ?>">
+					<i class="<?php echo $value['iconClass']; ?>">
+					</i> <?php echo $value['category']; ?>
+					</a>
+					</span>  
+
+					<a href="<?php echo $global['webSiteRootURL']; ?>playlist/<?php echo $value['clean_category']; ?>" class="btn btn-xs btn-default playAll hrefLink" ><span class="fa fa-play"></span> <?php echo __("Play All in " . $value['category']); ?></a><?php echo $playListButtons; ?>
+
+					
                 <?php } ?>
                 <?php
                 foreach ($value['tags'] as $value2) {
@@ -138,7 +156,7 @@ foreach ($videos as $value) {
             <div class="footerBtn">
                 <a class="btn btn-danger playBtn <?php echo $canWatchPlayButton; ?>" href="<?php echo YouPHPFlix2::getLinkToVideo($value['id']); ?>">
                     <i class="fa fa-play"></i> 
-                    <span class="hidden-xs"><?php echo __("Play"); ?></span>
+                    <span class="hidden-xs"><?php echo __("Play Video"); ?></span>
                 </a>
                 <?php
                 if (!empty($value['trailer1'])) {
