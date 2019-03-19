@@ -136,6 +136,48 @@ class PlayList extends ObjectYPT {
         return $rows;
     }
 
+	
+	
+	
+   static function getVideosFromCat($categories_id) {
+        global $global;
+        $sql = "SELECT *, categories.clean_name as playlists_id, videos.id as id, videos.created as cre, videos.externalOptions as externalOptions, categories.name as name FROM videos LEFT JOIN categories ON videos.categories_id = categories.id WHERE categories.id = ?";
+        $sql .= self::getSqlFromPost();
+        $res = sqlDAL::readSql($sql, "i", array($playlists_id));
+        $fullData = sqlDAL::fetchAllAssoc($res);
+        sqlDAL::close($res);
+        $rows = array();
+        if ($res != false) {
+            foreach ($fullData as $row) {
+                if (!empty($_GET['isChannel'])) {
+                    $row['tags'] = Video::getTags($row['id']);
+                    $row['pluginBtns'] = YouPHPTubePlugin::getPlayListButtons($categories_id);
+                    $row['humancreate'] = humanTiming(strtotime($row['cre']));
+                }
+                $rows[] = $row;
+            }
+        } else {
+            die($sql . '\nError : (' . $global['mysqli']->errno . ') ' . $global['mysqli']->error);
+        }
+        return $rows;
+    }		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     static function isVideoOnFavorite($videos_id, $users_id) {
         return self::isVideoOn($videos_id, $users_id, 'favorite');
     }
@@ -216,6 +258,23 @@ class PlayList extends ObjectYPT {
         return $videosId;
     }
 
+	
+	
+    static function getVideosIdFromCat($categories_id) {
+        $videosId = array();
+        $rows = static::getVideosFromCat($playlists_id);
+        foreach ($rows as $value) {
+            $videosId[] = $value['videos_id'];
+        }
+        return $videosId;
+    }	
+	
+	
+	
+	
+	
+	
+	
     static function sortVideos($videosList, $listIdOrder) {
         $list = array();
         foreach ($listIdOrder as $value) {
@@ -261,12 +320,14 @@ class PlayList extends ObjectYPT {
         } else {
             $this->addVideo($video_id, false);
             $sql = "INSERT INTO playlists_has_videos ( playlists_id, videos_id , `order`) VALUES (?, ?, ?) ";
+			$sql2 = "INSERT INTO playlists_has_videos ( 5, videos_id , `order`) VALUES (?, ?, ?) ";
             $formats = "iii";
             $values[] = $this->id;
             $values[] = $video_id;
             $values[] = $order;
         }
         return sqlDAL::writeSql($sql, $formats, $values);
+		return sqlDAL::writeSql($sql2, $formats, $values);
     }
 
     public function delete() {
