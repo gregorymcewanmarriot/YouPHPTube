@@ -79,7 +79,10 @@ if ($obj->BigVideo && empty($_GET['showOnly'])) {
                         <?php
                         if (!empty($advancedCustom) && empty($advancedCustom->doNotDisplayCategory)) {
                             ?>
-                            <span class="label label-success"><a style="color: inherit;" class="tile__cat" cat="<?php echo $video['clean_category']; ?>" href="<?php echo $global['webSiteRootURL'] . "cat/" . $video['clean_category']; ?>"><i class="<?php echo $video['iconClass']; ?>"></i> <?php echo $video['category']; ?></a></span>                       
+                            <span class="label label-success"><a style="color: inherit;" class="tile__cat" cat="<?php echo $video['clean_category']; ?>" href="<?php echo $global['webSiteRootURL'] . "cat/" . $video['clean_category']; ?>"><i class="<?php echo $video['iconClass']; ?>"></i> <?php echo $video['category']; ?></a></span>
+
+					<a href="<?php echo $global['webSiteRootURL']; ?>playlist/<?php echo $video['clean_category']; ?>" class="btn btn-xs btn-default playAll hrefLink" ><span class="fa fa-play"></span> <?php echo __("Play All in " . $video['category']); ?></a><?php echo $playListButtons; ?>	
+							
                         <?php } ?>
                         <?php
                         foreach ($video['tags'] as $value2) {
