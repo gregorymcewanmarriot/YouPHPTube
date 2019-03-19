@@ -98,6 +98,7 @@ class PlayList extends ObjectYPT {
         } else {
             die($sql . '\nError : (' . $global['mysqli']->errno . ') ' . $global['mysqli']->error);
         }
+		shuffle ($rows);
         return $rows;
     }
     
@@ -107,6 +108,7 @@ class PlayList extends ObjectYPT {
             $videos = self::getVideosIdFromPlaylist($value['id']);
             $rows[$key]['isOnPlaylist'] = in_array($videos_id, $videos);
         }
+		shuffle ($rows);
         return $rows;
     }
 
@@ -133,6 +135,7 @@ class PlayList extends ObjectYPT {
         } else {
             die($sql . '\nError : (' . $global['mysqli']->errno . ') ' . $global['mysqli']->error);
         }
+		shuffle ($rows);		
         return $rows;
     }
 
@@ -161,22 +164,6 @@ class PlayList extends ObjectYPT {
         }
         return $rows;
     }		
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
     static function isVideoOnFavorite($videos_id, $users_id) {
         return self::isVideoOn($videos_id, $users_id, 'favorite');
@@ -270,11 +257,6 @@ class PlayList extends ObjectYPT {
     }	
 	
 	
-	
-	
-	
-	
-	
     static function sortVideos($videosList, $listIdOrder) {
         $list = array();
         foreach ($listIdOrder as $value) {
@@ -282,11 +264,11 @@ class PlayList extends ObjectYPT {
                 if ($value2['id'] == $value) {
                     $list[] = $value2;
                     unset($videosList[$key]);
-                }
+				}
+						shuffle ($list);
             }
         }
         return $list;
-    }
 
     public function save() {
         if (!User::isLogged()) {
